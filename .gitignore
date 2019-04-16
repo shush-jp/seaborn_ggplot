@@ -1,0 +1,5 @@
+.history/
+.ipynb_checkpoints/
+.Rproj.user/
+graph.Rproj
+mpg.csv
