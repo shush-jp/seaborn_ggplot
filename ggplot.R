@@ -4,7 +4,13 @@ theme_set(theme_bw())
 #df_mpg = read_csv('https://raw.githubusercontent.com/mwaskom/seaborn-data/master/mpg.csv')
 df_mpg = read_csv('mpg.csv')
 
-#df_tips <- read_csv('https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv')
+"
+df_tips <- read_csv('https://raw.githubusercontent.com/mwaskom/seaborn-data/master/tips.csv') %>% 
+  mutate(day = fct_relevel(day, c('Thur', 'Fri', 'Sat', 'Sun')),
+         sex = fct_relevel(sex, c('Male', 'Female')),
+         smoker = fct_relevel(smoker, c('Yes', 'No'))) 
+"
+
 df_tips <- read_csv('tips.csv')
 
 
@@ -36,8 +42,26 @@ df_tips %>%
   mutate(day = fct_relevel(day, c('Thur', 'Fri', 'Sat', 'Sun')),
          sex = fct_relevel(sex, c('Male', 'Female')),
          smoker = fct_relevel(smoker, c('Yes', 'No'))) %>%
+  ggplot(aes(x=day, y=total_bill, fill=sex)) +
+  geom_bar(position="dodge", stat='summary') +
+  facet_grid(.~smoker)
+
+df_tips %>% 
+  mutate(day = fct_relevel(day, c('Thur', 'Fri', 'Sat', 'Sun')),
+         sex = fct_relevel(sex, c('Male', 'Female')),
+         smoker = fct_relevel(smoker, c('Yes', 'No'))) %>%
   group_by(day, sex, smoker) %>% 
   summarise(total_bill=mean(total_bill)) %>% 
   ggplot(aes(x=day, y=total_bill, fill=sex)) +
   geom_col(position="dodge") +
+  facet_grid(.~smoker)
+
+# box ---------------------------------------------------------------------
+
+df_tips %>% 
+  mutate(day = fct_relevel(day, c('Thur', 'Fri', 'Sat', 'Sun')),
+         sex = fct_relevel(sex, c('Male', 'Female')),
+         smoker = fct_relevel(smoker, c('Yes', 'No'))) %>%
+  ggplot(aes(x=day, y=total_bill, fill=sex)) +
+  geom_boxplot() +
   facet_grid(.~smoker)
