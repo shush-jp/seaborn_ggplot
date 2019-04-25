@@ -126,3 +126,12 @@ df_tips %>%
   ggplot(aes(x=total_bill, y=tip)) +
   geom_density2d() +
   facet_grid(.~time)
+
+# axis
+
+df_mpg %>% 
+  ggplot(aes(x=weight, y=mpg, color=origin, shape=origin)) +
+  geom_point() +
+  scale_x_log10() +
+  scale_y_log10() +
+  coord_cartesian(xlim=c(2000, 4000), ylim=c(10, 40))

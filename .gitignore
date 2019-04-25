@@ -2,5 +2,5 @@
 .ipynb_checkpoints/
 .Rproj.user/
 graph.Rproj
-mpg.csv
+*.csv
 .Rproj.user
